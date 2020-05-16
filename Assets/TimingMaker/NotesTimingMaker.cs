@@ -9,10 +9,12 @@ public class NotesTimingMaker : MonoBehaviour {
 
 	private bool _isPlaying = false;
 	public GameObject startButton;
+	public GameObject stopButton;
 
 	void Start () {
 		_audioSource = GameObject.Find ("GameMusic").GetComponent<AudioSource> ();
 		_CSVWriter = GameObject.Find ("CSVWriter").GetComponent<CSVWriter> ();
+		stopButton.SetActive (false);
 	}
 
 	void Update () {
@@ -23,9 +25,18 @@ public class NotesTimingMaker : MonoBehaviour {
 
 	public void StartMusic () {
 		startButton.SetActive (false);
+		stopButton.SetActive (true);
 		_audioSource.Play ();
 		_startTime = Time.time;
 		_isPlaying = true;
+	}
+
+	public void StopMusic () {
+		stopButton.SetActive (false);
+		_audioSource.Stop ();
+		_isPlaying = false;
+		WriteNotesTiming (-1);
+		Application.Quit();	// エディタ内実行では無視される
 	}
 
 	void DetectKeys () {
