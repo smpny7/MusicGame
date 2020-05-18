@@ -4,8 +4,8 @@ using UnityEngine;
 
 public static class GameUtil {
 
-	public static KeyCode GetKeyCodeByLineNum (int lineNum) {
-		switch (lineNum) {
+	public static KeyCode GetKeyCodeByLineNum (int lineNum) { //Self Containmen
+		switch (lineNum) { //キーコード割当
 			case 0:
 				return KeyCode.D;
 			case 1:
