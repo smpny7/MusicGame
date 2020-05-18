@@ -10,7 +10,7 @@ public class NotesScript : MonoBehaviour {
 
 	void Start () {
 		_gameManager = GameObject.Find ("GameManager").GetComponent<GameController> ();
-		_lineKey = GameUtil.GetKeyCodeByLineNum(lineNum);
+		_lineKey = GameUtil.GetKeyCodeByLineNum (lineNum);
 	}
 
 	void Update () {
@@ -21,8 +21,8 @@ public class NotesScript : MonoBehaviour {
 			Destroy (this.gameObject);
 		}
 
-		if(isInLine){
-			CheckInput(_lineKey);
+		if (isInLine) {
+			CheckInput (_lineKey);
 		}
 	}
 
