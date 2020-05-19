@@ -22,7 +22,7 @@ public class NotesScript : MonoBehaviour {
 		}
 
 		if (isInLine) { //Line上にノーツあれば
-			CheckInput (_lineKey);//キーを押されるかのチェック
+			CheckInput (_lineKey); //キーを押されるかのチェック
 		}
 	}
 
@@ -36,9 +36,32 @@ public class NotesScript : MonoBehaviour {
 
 	void CheckInput (KeyCode key) {
 
-		if (Input.GetKeyDown (key)) { //キーの入力が確認できたら
+		if (Input.GetKeyDown (key) || CheckTouch ()) { //キーの入力が確認できたら
 			_gameManager.GoodTimingFunc (lineNum); //エフェクト＆スコア加算
 			Destroy (this.gameObject); //オブジェクト削除
+		}
+	}
+
+	bool CheckTouch () { //By smpny7 (仮)
+		if (Input.touchCount > 0) {
+			Touch touch = Input.GetTouch (0);
+
+			if (touch.phase == TouchPhase.Began) {
+				Debug.Log ("押した瞬間");
+				return true;
+			} else {
+				return false;
+			}
+
+			// if (touch.phase == TouchPhase.Ended) {
+			// Debug.Log("離した瞬間");
+			// }
+
+			// if (touch.phase == TouchPhase.Moved) {
+			// 	Debug.Log("押しっぱなし");
+			// }
+		} else {
+			return false;
 		}
 	}
 }
