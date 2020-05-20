@@ -20,7 +20,7 @@ public class TouchEffectManager : SingletonMonoBehaviour<TouchEffectManager> {
 
 	void CheckInput (KeyCode key, int num) {
 		if (Input.GetKeyDown (key)) {
-			PlayEffect (num);
+			// PlayEffect (num);
 		}
 	}
 
