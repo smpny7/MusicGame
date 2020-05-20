@@ -1,0 +1,26 @@
+fileFormatVersion: 2
+guid: bb12b9a928ebe41939de8f223a1b09bb
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Cairo
+  fontNames:
+  - Cairo
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 08cfde50fd2da442d8dbc7aece5ff059, type: 3}
+  - {fileID: 12800000, guid: cac59012f56744a369a50363639ec351, type: 3}
+  - {fileID: 12800000, guid: 32f1b983b5ff54385b328bbd28af6885, type: 3}
+  - {fileID: 12800000, guid: 430a8c4504b3846dca9edff731e7cbcd, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
