@@ -18,6 +18,7 @@ Unityによる音ゲーの制作
 * `remove` : 削除（ファイル）
 * `upgrade` : バージョンアップ
 * `revert` : 変更取り消し
+* `merge` : マスターからの取り込み
 
 
 # ルール(随時追記)
@@ -61,6 +62,40 @@ Unityによる音ゲーの制作
 ```
 $ git checkout smpny7
 $ git merge master
+```
+
+
+# Gitの流れ
+
+## Masterに自分のブランチをマージしたい時
+
+```
+$ git branch  //自分のブランチにいるか確認
+        master
+     *  smpny7
+$ git add -A
+$ git commit -m "[add] コミットだよ"
+$ git push
+
+//github.comにアクセスしてPull Requestを行う．
+```
+
+## 上記でコンフリクト（衝突）が起こった場合
+> 最新のMasterを自分のブランチに取り込む
+
+```
+$ git checkout master
+$ git pull  //Masterのリモートの内容をローカルに反映
+$ git checkout smpny7   //自分のブランチへ
+$ git merge master
+
+//VSCodeのGUIでコンフリクトを修正
+
+$ git add -A
+$ git commit -m "[merge] Masterを取り込んだよ"
+$ git push
+
+//github.comにアクセスしてPull Requestを行う．
 ```
 
 
