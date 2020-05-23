@@ -102,10 +102,12 @@ public class GameController : MonoBehaviour {
 				_score = _score + _basescore * 0.5; //スコアに基礎点の50％を加算
 			else if (_combo <= 30) //コンボ数が30以下のとき
 				_score = _score + _basescore * 0.75; //スコアに基礎点の75％を加算
+			else //コンボ数が31以上のとき
+				_score = _score + _basescore; //スコアに基礎点を加算
 		}
 		else //コンボ数が30未満のときには以下の通り単に基礎点を加算
 			_score = _score + _basescore; // 以上 by natsu-dev
-			
+
 		_combo++; //コンボ加算
 	}
 }
