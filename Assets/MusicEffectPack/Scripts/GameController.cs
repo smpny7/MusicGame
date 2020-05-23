@@ -93,8 +93,6 @@ public class GameController : MonoBehaviour {
 		Debug.Log (GetMusicTime ()); //ログ出力
 		EffectManager.Instance.PlayEffect (num); //num番目のエフェクトを表示
 
-		_score++; //スコア加算
-
 		if (_maxcombo >= 30) { //コンボ数が30以上のときにはスコアは以下の通り傾斜加算
 			if (_combo <= 10) //コンボ数が10以下のとき
 				_score = _score + _basescore * 0.25; //スコアに基礎点の25％を加算
