@@ -37,7 +37,7 @@ public class NotesScript : MonoBehaviour {
 	void CheckInput (KeyCode key) {
 
 		if (Input.GetKeyDown (key) || CheckTouch ()) { //キーの入力が確認できたら
-			_gameManager.GoodTimingFunc (lineNum); //エフェクト＆スコア加算
+			_gameManager.PerfectTimingFunc (lineNum); //エフェクト＆スコア加算
 			Destroy (this.gameObject); //オブジェクト削除
 		}
 	}
