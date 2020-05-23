@@ -105,13 +105,21 @@ public class GameController : MonoBehaviour {
 		else //コンボ数が30未満のときには以下の通り単に基礎点を加算
 			_score = _score + _basescore * magni;
 	}
-	
+
 	public void PerfectTimingFunc (int num) {
 		Debug.Log ("Line:" + num + " Perfect!"); //ログ出力
 		Debug.Log (GetMusicTime ()); //ログ出力
 		EffectManager.Instance.PlayEffect (num); //num番目のエフェクトを表示
 		_combo++; //コンボ数を1加算
 		AddScore(1); //スコア加算(倍率はPerfectなので1)
+	}
+
+		public void GreatTimingFunc (int num) {
+		Debug.Log ("Line:" + num + " Great!"); //ログ出力
+		Debug.Log (GetMusicTime ()); //ログ出力
+		EffectManager.Instance.PlayEffect (num); //num番目のエフェクトを表示
+		_combo++; //コンボ数を1加算
+		AddScore(0.75); //スコア加算(倍率はGreatなので0.75)
 	}
 
 	private IEnumerator DelayMethod (float waitTime, Action action) {
