@@ -23,7 +23,7 @@ public class GameController : MonoBehaviour {
 
 	public Text scoreText;
 	private float _score = 0; //得点 (グローバル変数)
-	private int _combo = 0; //コンボ数 (グローバル変数) by natsu-dev
+	public int _combo = 0; //コンボ数 (グローバル変数) by natsu-dev
 
 	private int _maxcombo = 0; //最大コンボ数 (グローバル変数) by natsu-dev
 	private float _basescore = 0; //基礎点:ノーツ1つあたりのスコア (グローバル変数) by natsu-dev
@@ -38,7 +38,8 @@ public class GameController : MonoBehaviour {
 	void Update () {
 		if (_isPlaying) { //プレイ中であれば
 			CheckNextNotes (); //次のノーツを確認して生成
-			scoreText.text = _score.ToString ("D7"); //_score(グローバル変数)を取得して表示を更新
+			int _scoreInt = (int) Math.Round (_score, 0, MidpointRounding.AwayFromZero); //四捨五入して型変換(int)
+			scoreText.text = _scoreInt.ToString ("D7"); //_score(グローバル変数)を取得して表示を更新
 		}
 	}
 
@@ -90,20 +91,18 @@ public class GameController : MonoBehaviour {
 		return Time.time - _startTime; //開始からのタイムを返す
 	}
 
-	public void AddScore(float magni) { //加点のための関数,引数magniは判定ごとのスコア倍率 by natsu-dev
-
+	public void AddScore (float magni) { //加点のための関数,引数magniは判定ごとのスコア倍率 by natsu-dev
 		if (_maxcombo >= 30) { //コンボ数が30以上のときにはスコアは以下の通り傾斜加算
 			if (_combo <= 10) //コンボ数が10以下のとき
-				_score = _score + _basescore * 0.25 * magni; //スコアに基礎点の25％を加算
+				_score += _basescore * 0.25f * magni; //スコアに基礎点の25％を加算
 			else if (_combo <= 20) //コンボ数が20以下のとき
-				_score = _score + _basescore * 0.5 * magni; //スコアに基礎点の50％を加算
+				_score += _basescore * 0.5f * magni; //スコアに基礎点の50％を加算
 			else if (_combo <= 30) //コンボ数が30以下のとき
-				_score = _score + _basescore * 0.75 * magni; //スコアに基礎点の75％を加算
+				_score += _basescore * 0.75f * magni; //スコアに基礎点の75％を加算
 			else //コンボ数が31以上のとき
-				_score = _score + _basescore * magni; //スコアに基礎点を加算
-		}
-		else //コンボ数が30未満のときには以下の通り単に基礎点を加算
-			_score = _score + _basescore * magni;
+				_score += _basescore * magni; //スコアに基礎点を加算
+		} else //コンボ数が30未満のときには以下の通り単に基礎点を加算
+			_score += _basescore * magni;
 	}
 
 	public void PerfectTimingFunc (int num) {
@@ -111,15 +110,15 @@ public class GameController : MonoBehaviour {
 		Debug.Log (GetMusicTime ()); //ログ出力
 		EffectManager.Instance.PlayEffect (num); //num番目のエフェクトを表示
 		_combo++; //コンボ数を1加算
-		AddScore(1); //スコア加算(倍率はPerfectなので1)
+		AddScore (1); //スコア加算(倍率はPerfectなので1)
 	}
 
-		public void GreatTimingFunc (int num) {
+	public void GreatTimingFunc (int num) {
 		Debug.Log ("Line:" + num + " Great!"); //ログ出力
 		Debug.Log (GetMusicTime ()); //ログ出力
 		EffectManager.Instance.PlayEffect (num); //num番目のエフェクトを表示
 		_combo++; //コンボ数を1加算
-		AddScore(0.75); //スコア加算(倍率はGreatなので0.75)
+		AddScore (0.75f); //スコア加算(倍率はGreatなので0.75)
 	}
 
 	private IEnumerator DelayMethod (float waitTime, Action action) {
