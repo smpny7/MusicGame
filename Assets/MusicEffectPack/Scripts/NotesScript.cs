@@ -16,7 +16,7 @@ public class NotesScript : MonoBehaviour {
 	void Update () {
 		this.transform.position += Vector3.down * 10 * Time.deltaTime; //落下させる
 
-		if (this.transform.position.y < -5.0f) { //Lineよりも下に落ちた場合
+		if (this.transform.position.y < -3.8f) { //下枠よりも下に落ちた場合
 			Debug.Log ("false"); //ログ出力
 			Destroy (this.gameObject); //オブジェクト削除
 		}

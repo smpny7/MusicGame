@@ -38,15 +38,17 @@ public class GameController : MonoBehaviour {
 	void Update () {
 		if (_isPlaying) { //プレイ中であれば
 			CheckNextNotes (); //次のノーツを確認して生成
-			scoreText.text = _score.ToString (); //_score(グローバル変数)を取得して表示を更新
+			scoreText.text = _score.ToString ("D7"); //_score(グローバル変数)を取得して表示を更新
 		}
 	}
 
 	public void StartGame () {
 		startButton.SetActive (false); //startButtonを非表示
 		_startTime = Time.time; //ゲームを開始した時刻をメモリー
-		_audioSource.Play (); //音楽再生
 		_isPlaying = true; //プレイ中
+		StartCoroutine (DelayMethod (1f, () => { //1秒遅延
+			_audioSource.Play (); //音楽再生
+		}));
 	}
 
 	void CheckNextNotes () {
@@ -58,7 +60,7 @@ public class GameController : MonoBehaviour {
 
 	void SpawnNotes (int num) { //Self Containment
 		Instantiate (notes[num], //Instantiate(ORIGINAL, POSITION, ROTATION) :Unityライブラリ関数 -> 引数(コピー元のオブジェクト名, 生成する位置, 向き)
-			new Vector3 (-4.0f + (2.0f * num), 10.0f, 0), //Vector3(x, y, z) :Unityライブラリ関数
+			new Vector3 (-5f + (2.5f * num), 6.0f, 0), //Vector3(x, y, z) :Unityライブラリ関数
 			Quaternion.identity); // 回転なし (親の軸と同じ)
 	}
 
@@ -71,7 +73,7 @@ public class GameController : MonoBehaviour {
 			string line = reader.ReadLine (); //1行読み込み
 			string[] values = line.Split (','); //カンマで区切って配列に格納
 			for (j = 0; j < values.Length; j++) { //区切った要素数ループ (2回)
-				_timing[i] = float.Parse (values[0]); //_timing[]配列に格納 (グローバル変数)
+				_timing[i] = float.Parse (values[0]) + 1; //_timing[]配列に格納 (グローバル変数)
 				_lineNum[i] = int.Parse (values[1]); //_lineNum[]配列に格納 (グローバル変数)
 			}
 			i++;
@@ -118,5 +120,10 @@ public class GameController : MonoBehaviour {
 		EffectManager.Instance.PlayEffect (num); //num番目のエフェクトを表示
 		_combo++; //コンボ数を1加算
 		AddScore(0.75); //スコア加算(倍率はGreatなので0.75)
+	}
+
+	private IEnumerator DelayMethod (float waitTime, Action action) {
+		yield return new WaitForSeconds (waitTime);
+		action ();
 	}
 }
