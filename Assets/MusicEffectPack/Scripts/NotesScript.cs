@@ -19,6 +19,7 @@ public class NotesScript : MonoBehaviour {
 		if (this.transform.position.y < -3.8f) { //下枠よりも下に落ちた場合
 			Debug.Log ("false"); //ログ出力
 			Destroy (this.gameObject); //オブジェクト削除
+			_combo = 0; //コンボ数を初期化 by natsu-dev
 		}
 
 		if (isInLine) { //Line上にノーツあれば
@@ -37,7 +38,7 @@ public class NotesScript : MonoBehaviour {
 	void CheckInput (KeyCode key) {
 
 		if (Input.GetKeyDown (key) || CheckTouch ()) { //キーの入力が確認できたら
-			_gameManager.GoodTimingFunc (lineNum); //エフェクト＆スコア加算
+			_gameManager.PerfectTimingFunc (lineNum); //エフェクト＆スコア加算
 			Destroy (this.gameObject); //オブジェクト削除
 		}
 	}
