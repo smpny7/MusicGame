@@ -56,7 +56,7 @@ public class GameController : MonoBehaviour {
 
 	void SpawnNotes (int num) { //Self Containment
 		Instantiate (notes[num], //Instantiate(ORIGINAL, POSITION, ROTATION) :Unityライブラリ関数 -> 引数(コピー元のオブジェクト名, 生成する位置, 向き)
-			new Vector3 (-5f + (2.5f * num), 6.0f, 0), //Vector3(x, y, z) :Unityライブラリ関数
+			new Vector3 (-5f + (2.5f * num), 8.2f, 0), //Vector3(x, y, z) :Unityライブラリ関数
 			Quaternion.identity); // 回転なし (親の軸と同じ)
 	}
 
