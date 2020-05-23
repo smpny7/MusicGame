@@ -90,25 +90,28 @@ public class GameController : MonoBehaviour {
 		return Time.time - _startTime; //開始からのタイムを返す
 	}
 
-	public void PerfectTimingFunc (int num) {
-		Debug.Log ("Line:" + num + " good!"); //ログ出力
-		Debug.Log (GetMusicTime ()); //ログ出力
-		EffectManager.Instance.PlayEffect (num); //num番目のエフェクトを表示
+	public void AddScore(float magni) { //加点のための関数,引数magniは判定ごとのスコア倍率 by natsu-dev
 
 		if (_maxcombo >= 30) { //コンボ数が30以上のときにはスコアは以下の通り傾斜加算
 			if (_combo <= 10) //コンボ数が10以下のとき
-				_score = _score + _basescore * 0.25; //スコアに基礎点の25％を加算
+				_score = _score + _basescore * 0.25 * magni; //スコアに基礎点の25％を加算
 			else if (_combo <= 20) //コンボ数が20以下のとき
-				_score = _score + _basescore * 0.5; //スコアに基礎点の50％を加算
+				_score = _score + _basescore * 0.5 * magni; //スコアに基礎点の50％を加算
 			else if (_combo <= 30) //コンボ数が30以下のとき
-				_score = _score + _basescore * 0.75; //スコアに基礎点の75％を加算
+				_score = _score + _basescore * 0.75 * magni; //スコアに基礎点の75％を加算
 			else //コンボ数が31以上のとき
-				_score = _score + _basescore; //スコアに基礎点を加算
+				_score = _score + _basescore * magni; //スコアに基礎点を加算
 		}
 		else //コンボ数が30未満のときには以下の通り単に基礎点を加算
-			_score = _score + _basescore; // 以上 by natsu-dev
-
-		_combo++; //コンボ加算
+			_score = _score + _basescore * magni;
+	}
+	
+	public void PerfectTimingFunc (int num) {
+		Debug.Log ("Line:" + num + " Perfect!"); //ログ出力
+		Debug.Log (GetMusicTime ()); //ログ出力
+		EffectManager.Instance.PlayEffect (num); //num番目のエフェクトを表示
+		_combo++; //コンボ数を1加算
+		AddScore(1); //スコア加算(倍率はPerfectなので1)
 	}
 
 	private IEnumerator DelayMethod (float waitTime, Action action) {
