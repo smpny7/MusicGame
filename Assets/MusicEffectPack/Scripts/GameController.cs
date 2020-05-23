@@ -88,7 +88,7 @@ public class GameController : MonoBehaviour {
 		return Time.time - _startTime; //開始からのタイムを返す
 	}
 
-	public void GoodTimingFunc (int num) {
+	public void PerfectTimingFunc (int num) {
 		Debug.Log ("Line:" + num + " good!"); //ログ出力
 		Debug.Log (GetMusicTime ()); //ログ出力
 		EffectManager.Instance.PlayEffect (num); //num番目のエフェクトを表示
