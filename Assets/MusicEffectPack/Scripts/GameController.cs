@@ -22,8 +22,11 @@ public class GameController : MonoBehaviour {
 	public GameObject startButton;
 
 	public Text scoreText;
-	private int _score = 0; //得点 (グローバル変数)
-	private int _combo = 0; //コンボ (グローバル変数) by natsu-dev
+	private float _score = 0; //得点 (グローバル変数)
+	private int _combo = 0; //コンボ数 (グローバル変数) by natsu-dev
+
+	private int _maxcombo = 0; //最大コンボ数 (グローバル変数) by natsu-dev
+	private float _basescore = 0; //基礎点:ノーツ1つあたりのスコア (グローバル変数) by natsu-dev
 
 	void Start () {
 		_audioSource = GameObject.Find ("GameMusic").GetComponent<AudioSource> (); //インスタンスにAudioClip情報を格納
@@ -75,6 +78,12 @@ public class GameController : MonoBehaviour {
 			}
 			i++;
 		}
+		_maxcombo = _lineNum.Length; //最大コンボ数を_lineNum[]配列の要素数から取得 by natsu-dev
+
+		if (_maxcombo >= 30) //コンボ数が30以上のとき
+			_basescore = 1000000 / (_maxcombo - 15); //基礎点は1000000点を最大コンボ数-15で割った値
+		else //コンボ数が30未満のとき
+			_basescore = 1000000 / _maxcombo; // 基礎点は1000000点を最大コンボ数で割った値 以上 by natsu-dev
 	}
 
 	float GetMusicTime () { //Self Containment
@@ -85,7 +94,22 @@ public class GameController : MonoBehaviour {
 		Debug.Log ("Line:" + num + " good!"); //ログ出力
 		Debug.Log (GetMusicTime ()); //ログ出力
 		EffectManager.Instance.PlayEffect (num); //num番目のエフェクトを表示
+
 		_score++; //スコア加算
+
+		if (_maxcombo >= 30) { //コンボ数が30以上のときにはスコアは以下の通り傾斜加算
+			if (_combo <= 10) //コンボ数が10以下のとき
+				_score = _score + _basescore * 0.25; //スコアに基礎点の25％を加算
+			else if (_combo <= 20) //コンボ数が20以下のとき
+				_score = _score + _basescore * 0.5; //スコアに基礎点の50％を加算
+			else if (_combo <= 30) //コンボ数が30以下のとき
+				_score = _score + _basescore * 0.75; //スコアに基礎点の75％を加算
+			else //コンボ数が31以上のとき
+				_score = _score + _basescore; //スコアに基礎点を加算
+		}
+		else //コンボ数が30未満のときには以下の通り単に基礎点を加算
+			_score = _score + _basescore; // 以上 by natsu-dev
+
 		_combo++; //コンボ加算
 	}
 
