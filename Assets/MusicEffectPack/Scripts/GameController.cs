@@ -23,6 +23,7 @@ public class GameController : MonoBehaviour {
 
 	public Text scoreText;
 	private int _score = 0; //得点 (グローバル変数)
+	private int _combo = 0; //コンボ (グローバル変数) by natsu-dev
 
 	void Start () {
 		_audioSource = GameObject.Find ("GameMusic").GetComponent<AudioSource> (); //インスタンスにAudioClip情報を格納
@@ -83,5 +84,6 @@ public class GameController : MonoBehaviour {
 		Debug.Log (GetMusicTime ()); //ログ出力
 		EffectManager.Instance.PlayEffect (num); //num番目のエフェクトを表示
 		_score++; //スコア加算
+		_combo++; //コンボ加算
 	}
 }
