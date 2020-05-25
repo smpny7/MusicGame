@@ -38,6 +38,9 @@ Thumbs.db
 # ============ #
 *.html
 *.unity3d
+*.wav
+*.mp4
+*.mp3
 iOSMusicGame
 
 # ============ #
