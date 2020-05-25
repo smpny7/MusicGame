@@ -15,7 +15,7 @@ public class GameController : MonoBehaviour
     private int _notesCount = 0; //ノーツの通し番号
 
     private AudioSource _audioSource;
-    private AudioSource[] SoundEffects; //perfect, great, badのSE情報を格納
+    private AudioSource[] _GameSoundEffects; //Perfect, Great, BadのSE情報を格納（グローバル変数）．複数音あるため配列 by chishige
     private float _startTime = 0; //開始時刻を保存しておく (仮の初期化, グローバル変数)
 
     public float timeOffset = -1; //ノーツが落下してくるまでの時間
@@ -32,7 +32,7 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        SoundEffects = GameObject.Find("GameSoundEffect").GetComponents<AudioSource>(); //インスタンスにAudioClip情報を格納
+        _GameSoundEffects = GameObject.Find("GameSoundEffect").GetComponents<AudioSource>(); //インスタンスにAudioClip情報を格納
         _audioSource = GameObject.Find("GameMusic").GetComponent<AudioSource>(); //インスタンスにAudioClip情報を格納
         _timing = new float[1024]; //要素数指定してグローバル変数を初期化
         _lineNum = new int[1024]; //要素数指定してグローバル変数を初期化
@@ -123,22 +123,22 @@ public class GameController : MonoBehaviour
             _score += _basescore * magni;
     }
 
-    public void PlaySoundEffect(int sw)
+    public void GameSoundEffect(int sw) //by chishige
     {
-        if (sw == 0) //パーフェクトサウンドの再生
+        if (sw == 0) //Perfectサウンドの再生
         {
-            SoundEffects[0].PlayOneShot(SoundEffects[0].clip);
-            Debug.Log(" perfect sound played.");
+            _GameSoundEffects[0].PlayOneShot(_GameSoundEffects[0].clip); //PlayOneShotは効果音で使う（引数にClip情報が必要）
+            Debug.Log("perfect sound played."); //ログ出力
         }
-        else if (sw == 1) //グレートサウンドの再生
+        else if (sw == 1) //Greatサウンドの再生
         {
-            SoundEffects[1].PlayOneShot(SoundEffects[1].clip);
-            Debug.Log(" great sound played.");
+            _GameSoundEffects[1].PlayOneShot(_GameSoundEffects[1].clip);
+            Debug.Log("great sound played."); //ログ出力
         }
-        else if (sw == 2) //バッドサウンドの再生
+        else if (sw == 2) //Badサウンドの再生
         {
-            SoundEffects[2].PlayOneShot(SoundEffects[2].clip);
-            Debug.Log("bad sound played.");
+            _GameSoundEffects[2].PlayOneShot(_GameSoundEffects[2].clip);
+            Debug.Log("bad sound played."); //ログ出力
         }
     }
 
@@ -150,7 +150,7 @@ public class GameController : MonoBehaviour
         Debug.Log("Line:" + num + " Perfect!"); //ログ出力
         Debug.Log(GetMusicTime()); //ログ出力
         EffectManager.Instance.PlayEffect(num); //num番目のエフェクトを表示
-        PlaySoundEffect(0); //Perfectサウンドを再生
+        GameSoundEffect(0); //Perfectサウンド（引数0）を再生
         _combo++; //コンボ数を1加算
         AddScore(1); //スコア加算(倍率はPerfectなので1)
     }
@@ -160,7 +160,7 @@ public class GameController : MonoBehaviour
         Debug.Log("Line:" + num + " Great!"); //ログ出力
         Debug.Log(GetMusicTime()); //ログ出力
         EffectManager.Instance.PlayEffect(num); //num番目のエフェクトを表示
-        PlaySoundEffect(1); //Greatサウンド再生
+        GameSoundEffect(1); //Greatサウンド再生
         _combo++; //コンボ数を1加算
         AddScore(0.75f); //スコア加算(倍率はGreatなので0.75)
     }
