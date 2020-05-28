@@ -97,7 +97,7 @@ public class GameController : MonoBehaviour
         }
         _maxcombo = _lineNum.Length; //最大コンボ数を_lineNum[]配列の要素数から取得 by natsu-dev
         _maxcombo_float = _maxcombo;
-        Debug.Log("_maxcombo = %d", _maxcombo); //ログ出力
+        Debug.Log("_maxcombo =" + _maxcombo); //ログ出力
 
         if (_maxcombo >= 30) //コンボ数が30以上のとき
             _basescore = 1000000f / (_maxcombo_float - 15f); //基礎点は1000000点を最大コンボ数-15で割った値
