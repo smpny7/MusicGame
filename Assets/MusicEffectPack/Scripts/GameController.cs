@@ -126,7 +126,7 @@ public class GameController : MonoBehaviour
         for (int i = 0; i <= 100; i++) //100分割したものを5ミリ秒ごとに100回加算()
         {
             _score += ScoreTemp / 100;
-            await DelayMethod(5);
+            await Task.Delay(5);
         }
     }
 
