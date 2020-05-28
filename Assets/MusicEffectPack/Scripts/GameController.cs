@@ -103,8 +103,8 @@ public class GameController : MonoBehaviour
             _basescore = 1000000f / (_maxcombo_float - 15f); //基礎点は1000000点を最大コンボ数-15で割った値
         else //コンボ数が30未満のとき
             _basescore = 1000000f / _maxcombo_float; // 基礎点は1000000点を最大コンボ数で割った値 以上 by natsu-dev
-        Debug.Log("_basescore = %d", _basescore); //ログ出力
-        Debug.Log("MaxScore : %d", _basescore * _maxcombo); //ログ出力
+        Debug.Log("_basescore = %f", _basescore); //ログ出力
+        Debug.Log("MaxScore : %.0f", _basescore * _maxcombo_float); //ログ出力
     }
 
     float GetMusicTime()
