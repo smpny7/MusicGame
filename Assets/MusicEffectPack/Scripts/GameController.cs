@@ -96,10 +96,11 @@ public class GameController : MonoBehaviour
         }
         _maxcombo = _lineNum.Length; //最大コンボ数を_lineNum[]配列の要素数から取得 by natsu-dev
 
+
         if (_maxcombo >= 30) //コンボ数が30以上のとき
-            _basescore = 1000000f / (_maxcombo - 15f); //基礎点は1000000点を最大コンボ数-15で割った値
+            _basescore = 1000000f / (int.ToSingle(_maxcombo) - 15f); //基礎点は1000000点を最大コンボ数-15で割った値
         else //コンボ数が30未満のとき
-            _basescore = 1000000f / _maxcombo; // 基礎点は1000000点を最大コンボ数で割った値 以上 by natsu-dev
+            _basescore = 1000000f / int.ToSingle(_maxcombo); // 基礎点は1000000点を最大コンボ数で割った値 以上 by natsu-dev
     }
 
     float GetMusicTime()
