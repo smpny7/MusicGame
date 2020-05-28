@@ -106,21 +106,28 @@ public class GameController : MonoBehaviour
         return Time.time - _startTime; //開始からのタイムを返す
     }
 
-    public void AddScore(float magni)
+    public async void AddScore(float magni)
     { //加点のための関数,引数magniは判定ごとのスコア倍率 by natsu-dev
+        float ScoreTemp = 0;
         if (_maxcombo >= 30)
         { //コンボ数が30以上のときにはスコアは以下の通り傾斜加算
             if (_combo <= 10) //コンボ数が10以下のとき
-                _score += _basescore * 0.25f * magni; //スコアに基礎点の25％を加算
+                ScoreTemp = _basescore * 0.25f * magni; //スコアに基礎点の25％を加算
             else if (_combo <= 20) //コンボ数が20以下のとき
-                _score += _basescore * 0.5f * magni; //スコアに基礎点の50％を加算
+                ScoreTemp = _basescore * 0.5f * magni; //スコアに基礎点の50％を加算
             else if (_combo <= 30) //コンボ数が30以下のとき
-                _score += _basescore * 0.75f * magni; //スコアに基礎点の75％を加算
+                ScoreTemp = _basescore * 0.75f * magni; //スコアに基礎点の75％を加算
             else //コンボ数が31以上のとき
-                _score += _basescore * magni; //スコアに基礎点を加算
+                ScoreTemp = _basescore * magni; //スコアに基礎点を加算
         }
         else //コンボ数が30未満のときには以下の通り単に基礎点を加算
-            _score += _basescore * magni;
+            ScoreTemp = _basescore * magni;
+        
+        for (int i = 0; i <= 100; i++) //100分割したものを5ミリ秒ごとに100回加算()
+        {
+            _score += ScoreTemp / 100;
+            await DelayMethod(5);
+        }
     }
 
     public void GameSoundEffect(int sw) //by chishige
