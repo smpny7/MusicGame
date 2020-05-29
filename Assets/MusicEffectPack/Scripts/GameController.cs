@@ -25,12 +25,11 @@ public class GameController : MonoBehaviour
     public GameObject startButton;
 
     public Text scoreText;
-    public float _score = 0; //得点 (グローバル変数)
-    public int _combo = 0; //コンボ数 (グローバル変数) by natsu-dev
+    public double _score = 0; //得点 (浮動小数点型)
+    public int _combo = 0; //コンボ数 (整数型) by natsu-dev
 
-    public int _maxcombo = 0; //最大コンボ数 (グローバル変数) by natsu-dev
-    public float _maxcombo_float = 0; //最大コンボ数 (浮動小数点型) by natsu-dev
-    public float _basescore = 0; //基礎点:ノーツ1つあたりのスコア (グローバル変数) by natsu-dev
+    public int _maxcombo = 0; //最大コンボ数 (整数型) by natsu-dev
+    public double _basescore = 0; //基礎点:ノーツ1つあたりのスコア (整数型) by natsu-dev
 
     void Start()
     {
@@ -88,6 +87,7 @@ public class GameController : MonoBehaviour
 
             string line = reader.ReadLine(); //1行読み込み
             string[] values = line.Split(','); //カンマで区切って配列に格納
+            _maxcombo++; //最大コンボ数を+1
             for (j = 0; j < values.Length; j++)
             { //区切った要素数ループ (2回)
                 _timing[i] = float.Parse(values[0]) + 1; //_timing[]配列に格納 (グローバル変数)
@@ -95,16 +95,20 @@ public class GameController : MonoBehaviour
             }
             i++;
         }
-        _maxcombo = _lineNum.Length; //最大コンボ数を_lineNum[]配列の要素数から取得 by natsu-dev
-        _maxcombo_float = _maxcombo;
         Debug.Log("_maxcombo =" + _maxcombo); //ログ出力
 
         if (_maxcombo >= 30) //コンボ数が30以上のとき
-            _basescore = 1000000f / (_maxcombo_float - 15f); //基礎点は1000000点を最大コンボ数-15で割った値
+        {
+            _basescore = 1000000 / ((double)_maxcombo - 15); //基礎点は1000000点を最大コンボ数-15で割った値
+            Debug.Log("_basescore =" + _basescore); //ログ出力
+            Debug.Log("MaxScore (_maxcombo >= 30) :" + _basescore * ((double)_maxcombo - 15)); //ログ出力
+        }
         else //コンボ数が30未満のとき
-            _basescore = 1000000f / _maxcombo_float; // 基礎点は1000000点を最大コンボ数で割った値 以上 by natsu-dev
-        Debug.Log("_basescore =" + _basescore); //ログ出力
-        Debug.Log("MaxScore :" + _basescore * _maxcombo_float); //ログ出力
+        {
+            _basescore = 1000000 / (double)_maxcombo; // 基礎点は1000000点を最大コンボ数で割った値
+            Debug.Log("_basescore =" + _basescore); //ログ出力
+            Debug.Log("MaxScore (_maxcombo < 30) :" + _basescore * (double)_maxcombo); //ログ出力
+        }
     }
 
     float GetMusicTime()
@@ -112,17 +116,17 @@ public class GameController : MonoBehaviour
         return Time.time - _startTime; //開始からのタイムを返す
     }
 
-    public async void AddScore(float magni)
+    public async void AddScore(double magni)
     { //加点のための関数,引数magniは判定ごとのスコア倍率 by natsu-dev
-        float ScoreTemp = 0;
+        double ScoreTemp = 0;
         if (_maxcombo >= 30)
         { //コンボ数が30以上のときにはスコアは以下の通り傾斜加算
             if (_combo <= 10) //コンボ数が10以下のとき
-                ScoreTemp = _basescore * 0.25f * magni; //スコアに基礎点の25％を加算
+                ScoreTemp = _basescore * 0.25 * magni; //スコアに基礎点の25％を加算
             else if (_combo <= 20) //コンボ数が20以下のとき
-                ScoreTemp = _basescore * 0.5f * magni; //スコアに基礎点の50％を加算
+                ScoreTemp = _basescore * 0.5 * magni; //スコアに基礎点の50％を加算
             else if (_combo <= 30) //コンボ数が30以下のとき
-                ScoreTemp = _basescore * 0.75f * magni; //スコアに基礎点の75％を加算
+                ScoreTemp = _basescore * 0.75 * magni; //スコアに基礎点の75％を加算
             else //コンボ数が31以上のとき
                 ScoreTemp = _basescore * magni; //スコアに基礎点を加算
         }
@@ -131,7 +135,7 @@ public class GameController : MonoBehaviour
 
         for (int i = 0; i <= 15; i++) //100分割したものを5ミリ秒ごとに100回加算()
         {
-            _score += ScoreTemp / 15f;
+            _score += ScoreTemp / 15;
             await Task.Delay(33);
         }
     }
