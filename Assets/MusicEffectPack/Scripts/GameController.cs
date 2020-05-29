@@ -25,11 +25,11 @@ public class GameController : MonoBehaviour
     public GameObject startButton;
 
     public Text scoreText;
-    public double _score = 0; //得点 (浮動小数点型)
-    public int _combo = 0; //コンボ数 (整数型) by natsu-dev
+    public double _score = 0; //得点
+    public int _combo = 0; //コンボ数
 
-    public int _maxcombo = 0; //最大コンボ数 (整数型) by natsu-dev
-    public double _basescore = 0; //基礎点:ノーツ1つあたりのスコア (整数型) by natsu-dev
+    public int _maxcombo = 0; //最大コンボ数
+    public double _basescore = 0; //基礎点:ノーツ1つあたりのスコア
 
     void Start()
     {
