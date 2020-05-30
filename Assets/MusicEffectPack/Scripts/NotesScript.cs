@@ -22,8 +22,17 @@ public class NotesScript : MonoBehaviour {
 			_gameManager._combo = 0; //コンボ数を初期化 by natsu-dev
 		}
 
-		if (isInLine) { //Line上にノーツあれば
-			CheckInput (_lineKey); //キーを押されるかのチェック
+		// if (isInLine) { //Line上にノーツあれば
+		// 	CheckInput (_lineKey); //キーを押されるかのチェック
+		// }	ミス判定ができるように初期コード再形成
+
+		if (Input.GetKeyDown (_lineKey)) { //By smpny7
+			if (isInLine) {
+				_gameManager.PerfectTimingFunc (lineNum); //エフェクト＆スコア加算
+				Destroy (this.gameObject); //オブジェクト削除
+			} else {
+				_gameManager._combo = 0; //コンボ数を0から
+			}
 		}
 	}
 
@@ -35,34 +44,48 @@ public class NotesScript : MonoBehaviour {
 		isInLine = false; //Line上にノーツ無し
 	}
 
-	void CheckInput (KeyCode key) {
+	// void CheckInput (KeyCode key) {
 
-		if (Input.GetKeyDown (key) || CheckTouch ()) { //キーの入力が確認できたら
-			_gameManager.PerfectTimingFunc (lineNum); //エフェクト＆スコア加算
-			Destroy (this.gameObject); //オブジェクト削除
-		}
-	}
+	// 	if (Input.GetKeyDown (key) || CheckTouch (key)) { //キーの入力が確認できたら
+	// 		_gameManager.PerfectTimingFunc (lineNum); //エフェクト＆スコア加算
+	// 		Destroy (this.gameObject); //オブジェクト削除
+	// 	}
+	// }
 
-	bool CheckTouch () { //By smpny7 (仮)
-		if (Input.touchCount > 0) {
-			Touch touch = Input.GetTouch (0);
+	// bool CheckTouch (KeyCode key) { //By smpny7 (仮)
+	// 	if (Input.touchCount > 0) {
+	// 		Touch touch = Input.GetTouch (0);
 
-			if (touch.phase == TouchPhase.Began) {
-				Debug.Log ("押した瞬間");
-				return true;
-			} else {
-				return false;
-			}
+	// 		if (touch.phase == TouchPhase.Began) {
+	// 			Debug.Log ("押した瞬間");
+	// 			return true;
+	// 		} else {
+	// 			return false;
+	// 		}
 
-			// if (touch.phase == TouchPhase.Ended) {
-			// Debug.Log("離した瞬間");
-			// }
+	// 		// if (touch.phase == TouchPhase.Ended) {
+	// 		// Debug.Log("離した瞬間");
+	// 		// }
 
-			// if (touch.phase == TouchPhase.Moved) {
-			// 	Debug.Log("押しっぱなし");
-			// }
-		} else {
-			return false;
-		}
-	}
+	// 		// if (touch.phase == TouchPhase.Moved) {
+	// 		// 	Debug.Log("押しっぱなし");
+	// 		// }
+	// 	} else {
+	// 		return false;
+	// 	}
+	// }
+
+	// public void InputTouch () { //By smpny7
+	// 	Debug.Log ("touch");
+	// 	if (isInLine) {
+	// 		_gameManager.PerfectTimingFunc (lineNum); //エフェクト＆スコア加算
+	// 		Destroy (this.gameObject); //オブジェクト削除
+	// 		Debug.Log ("touch-1");
+
+	// 	} else {
+	// 		_gameManager._combo = 0; //コンボ数を0から
+	// 		Debug.Log ("touch-2");
+
+	// 	}
+	// }
 }
