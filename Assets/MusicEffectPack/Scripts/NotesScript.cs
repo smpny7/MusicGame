@@ -17,23 +17,24 @@ public class NotesScript : MonoBehaviour {
 		this.transform.position += Vector3.down * 10 * Time.deltaTime; //落下させる
 
 		if (this.transform.position.y < -3.8f) { //下枠よりも下に落ちた場合
-			Debug.Log ("false"); //ログ出力
+			// Debug.Log ("false"); //ログ出力
 			Destroy (this.gameObject); //オブジェクト削除
 			_gameManager._combo = 0; //コンボ数を初期化 by natsu-dev
 		}
 
-		// if (isInLine) { //Line上にノーツあれば
-		// 	CheckInput (_lineKey); //キーを押されるかのチェック
-		// }	ミス判定ができるように初期コード再形成
-
-		if (Input.GetKeyDown (_lineKey)) { //By smpny7
-			if (isInLine) {
-				_gameManager.PerfectTimingFunc (lineNum); //エフェクト＆スコア加算
-				Destroy (this.gameObject); //オブジェクト削除
-			} else {
-				_gameManager._combo = 0; //コンボ数を0から
-			}
+		if (isInLine) { //Line上にノーツあれば
+			CheckInput (_lineKey); //キーを押されるかのチェック
 		}
+		//	ミス判定ができるように初期コード再形成
+
+		// if (Input.GetKeyDown (_lineKey)) { //By smpny7
+		// 	if (isInLine) {
+		// 		_gameManager.PerfectTimingFunc (lineNum); //エフェクト＆スコア加算
+		// 		Destroy (this.gameObject); //オブジェクト削除
+		// 	} else {
+		// 		_gameManager._combo = 0; //コンボ数を0から
+		// 	}
+		// }
 	}
 
 	void OnTriggerEnter (Collider other) { //BoxColliderコンポーネントの isTrigger アクション (Unity標準関数)
@@ -44,13 +45,12 @@ public class NotesScript : MonoBehaviour {
 		isInLine = false; //Line上にノーツ無し
 	}
 
-	// void CheckInput (KeyCode key) {
-
-	// 	if (Input.GetKeyDown (key) || CheckTouch (key)) { //キーの入力が確認できたら
-	// 		_gameManager.PerfectTimingFunc (lineNum); //エフェクト＆スコア加算
-	// 		Destroy (this.gameObject); //オブジェクト削除
-	// 	}
-	// }
+	void CheckInput (KeyCode key) {
+		if (Input.GetKeyDown (key) || TouchCheck.CheckTouch (lineNum)) { //キーの入力が確認できたら
+			_gameManager.PerfectTimingFunc (lineNum); //エフェクト＆スコア加算
+			Destroy (this.gameObject); //オブジェクト削除
+		}
+	}
 
 	// bool CheckTouch (KeyCode key) { //By smpny7 (仮)
 	// 	if (Input.touchCount > 0) {
