@@ -85,19 +85,19 @@ public class GameController : MonoBehaviour {
             }
             i++;
         }
-        Debug.Log("_maxcombo =" + _maxcombo); //ログ出力
+        // Debug.Log("_maxcombo =" + _maxcombo); //ログ出力
 
         if (_maxcombo >= 30) //コンボ数が30以上のとき
         {
             _basescore = 1000000 / ((double)_maxcombo - 15); //基礎点は1000000点を最大コンボ数-15で割った値
-            Debug.Log("_basescore =" + _basescore); //ログ出力
-            Debug.Log("MaxScore (_maxcombo >= 30) :" + _basescore * ((double)_maxcombo - 15)); //ログ出力
+            // Debug.Log("_basescore =" + _basescore); //ログ出力
+            // Debug.Log("MaxScore (_maxcombo >= 30) :" + _basescore * ((double)_maxcombo - 15)); //ログ出力
         }
         else //コンボ数が30未満のとき
         {
             _basescore = 1000000 / (double)_maxcombo; // 基礎点は1000000点を最大コンボ数で割った値
-            Debug.Log("_basescore =" + _basescore); //ログ出力
-            Debug.Log("MaxScore (_maxcombo < 30) :" + _basescore * (double)_maxcombo); //ログ出力
+            // Debug.Log("_basescore =" + _basescore); //ログ出力
+            // Debug.Log("MaxScore (_maxcombo < 30) :" + _basescore * (double)_maxcombo); //ログ出力
         }
     }
 
@@ -133,21 +133,21 @@ public class GameController : MonoBehaviour {
         if (sw == 0) //Perfectサウンドの再生
         {
             _GameSoundEffects[0].PlayOneShot (_GameSoundEffects[0].clip); //PlayOneShotは効果音で使う（引数にClip情報が必要）
-            Debug.Log ("perfect sound played."); //ログ出力
+            // Debug.Log ("perfect sound played."); //ログ出力
         } else if (sw == 1) //Greatサウンドの再生
         {
             _GameSoundEffects[1].PlayOneShot (_GameSoundEffects[1].clip);
-            Debug.Log ("great sound played."); //ログ出力
+            // Debug.Log ("great sound played."); //ログ出力
         } else if (sw == 2) //Badサウンドの再生
         {
             _GameSoundEffects[2].PlayOneShot (_GameSoundEffects[2].clip);
-            Debug.Log ("bad sound played."); //ログ出力
+            // Debug.Log ("bad sound played."); //ログ出力
         }
     }
 
     public void PerfectTimingFunc (int num) {
-        Debug.Log ("Line:" + num + " Perfect!"); //ログ出力
-        Debug.Log (GetMusicTime ()); //ログ出力
+        // Debug.Log ("Line:" + num + " Perfect!"); //ログ出力
+        // Debug.Log (GetMusicTime ()); //ログ出力
         EffectManager.Instance.PlayEffect (num); //num番目のエフェクトを表示
         GameSoundEffect (0); //Perfectサウンド（引数0）を再生
         _combo++; //コンボ数を1加算
@@ -155,8 +155,8 @@ public class GameController : MonoBehaviour {
     }
 
     public void GreatTimingFunc (int num) {
-        Debug.Log ("Line:" + num + " Great!"); //ログ出力
-        Debug.Log (GetMusicTime ()); //ログ出力
+        // Debug.Log ("Line:" + num + " Great!"); //ログ出力
+        // Debug.Log (GetMusicTime ()); //ログ出力
         EffectManager.Instance.PlayEffect (num); //num番目のエフェクトを表示
         GameSoundEffect (1); //Greatサウンド再生
         _combo++; //コンボ数を1加算
