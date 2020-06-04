@@ -11,6 +11,8 @@ public class GameController : MonoBehaviour {
     private float[] _timing; //譜面のイベント時間 (配列, グローバル変数)
     private int[] _lineNum; //譜面のイベントレーン (配列, グローバル変数)
 
+    public TouchInput _touchInput;
+
     public string filePass; //CSVのパス
     private int _notesCount = 0; //ノーツの通し番号
 
@@ -33,6 +35,7 @@ public class GameController : MonoBehaviour {
     void Start () {
         _GameSoundEffects = GameObject.Find ("GameSoundEffect").GetComponents<AudioSource> (); //インスタンスにAudioClip情報を格納
         _audioSource = GameObject.Find ("GameMusic").GetComponent<AudioSource> (); //インスタンスにAudioClip情報を格納
+        _touchInput = GameObject.Find ("TouchInput").GetComponent<TouchInput> ();
         _timing = new float[1024]; //要素数指定してグローバル変数を初期化
         _lineNum = new int[1024]; //要素数指定してグローバル変数を初期化
         LoadCSV (); //CSV読み込みを行い譜面データを _timing, _lineNum 配列に格納
@@ -70,18 +73,16 @@ public class GameController : MonoBehaviour {
 
     void LoadCSV () { //Self Containment
         int i = 0, j;
-        TextAsset csv = Resources.Load(filePass) as TextAsset; //ファイル読み込み
-        StringReader reader = new StringReader(csv.text); //CSV内容格納
-        while (reader.Peek() > -1)
-        { //文字がある間
+        TextAsset csv = Resources.Load (filePass) as TextAsset; //ファイル読み込み
+        StringReader reader = new StringReader (csv.text); //CSV内容格納
+        while (reader.Peek () > -1) { //文字がある間
 
-            string line = reader.ReadLine(); //1行読み込み
-            string[] values = line.Split(','); //カンマで区切って配列に格納
+            string line = reader.ReadLine (); //1行読み込み
+            string[] values = line.Split (','); //カンマで区切って配列に格納
             _maxcombo++; //最大コンボ数を+1
-            for (j = 0; j < values.Length; j++)
-            { //区切った要素数ループ (2回)
-                _timing[i] = float.Parse(values[0]) + 1; //_timing[]配列に格納 (グローバル変数)
-                _lineNum[i] = int.Parse(values[1]); //_lineNum[]配列に格納 (グローバル変数)
+            for (j = 0; j < values.Length; j++) { //区切った要素数ループ (2回)
+                _timing[i] = float.Parse (values[0]) + 1; //_timing[]配列に格納 (グローバル変数)
+                _lineNum[i] = int.Parse (values[1]); //_lineNum[]配列に格納 (グローバル変数)
             }
             i++;
         }
@@ -89,13 +90,12 @@ public class GameController : MonoBehaviour {
 
         if (_maxcombo >= 30) //コンボ数が30以上のとき
         {
-            _basescore = 1000000 / ((double)_maxcombo - 15); //基礎点は1000000点を最大コンボ数-15で割った値
+            _basescore = 1000000 / ((double) _maxcombo - 15); //基礎点は1000000点を最大コンボ数-15で割った値
             // Debug.Log("_basescore =" + _basescore); //ログ出力
             // Debug.Log("MaxScore (_maxcombo >= 30) :" + _basescore * ((double)_maxcombo - 15)); //ログ出力
-        }
-        else //コンボ数が30未満のとき
+        } else //コンボ数が30未満のとき
         {
-            _basescore = 1000000 / (double)_maxcombo; // 基礎点は1000000点を最大コンボ数で割った値
+            _basescore = 1000000 / (double) _maxcombo; // 基礎点は1000000点を最大コンボ数で割った値
             // Debug.Log("_basescore =" + _basescore); //ログ出力
             // Debug.Log("MaxScore (_maxcombo < 30) :" + _basescore * (double)_maxcombo); //ログ出力
         }
@@ -105,11 +105,9 @@ public class GameController : MonoBehaviour {
         return Time.time - _startTime; //開始からのタイムを返す
     }
 
-    public async void AddScore(double magni)
-    { //加点のための関数,引数magniは判定ごとのスコア倍率 by natsu-dev
+    public async void AddScore (double magni) { //加点のための関数,引数magniは判定ごとのスコア倍率 by natsu-dev
         double ScoreTemp = 0;
-        if (_maxcombo >= 30)
-        { //コンボ数が30以上のときにはスコアは以下の通り傾斜加算
+        if (_maxcombo >= 30) { //コンボ数が30以上のときにはスコアは以下の通り傾斜加算
             if (_combo <= 10) //コンボ数が10以下のとき
                 ScoreTemp = _basescore * 0.25 * magni; //スコアに基礎点の25％を加算
             else if (_combo <= 20) //コンボ数が20以下のとき
@@ -124,7 +122,7 @@ public class GameController : MonoBehaviour {
         for (int i = 0; i <= 15; i++) //100分割したものを5ミリ秒ごとに100回加算()
         {
             _score += ScoreTemp / 15;
-            await Task.Delay(33);
+            await Task.Delay (33);
         }
     }
 
@@ -132,6 +130,7 @@ public class GameController : MonoBehaviour {
     {
         if (sw == 0) //Perfectサウンドの再生
         {
+            // _GameSoundEffects[0].Stop();
             _GameSoundEffects[0].PlayOneShot (_GameSoundEffects[0].clip); //PlayOneShotは効果音で使う（引数にClip情報が必要）
             // Debug.Log ("perfect sound played."); //ログ出力
         } else if (sw == 1) //Greatサウンドの再生
@@ -148,8 +147,8 @@ public class GameController : MonoBehaviour {
     public void PerfectTimingFunc (int num) {
         // Debug.Log ("Line:" + num + " Perfect!"); //ログ出力
         // Debug.Log (GetMusicTime ()); //ログ出力
-        EffectManager.Instance.PlayEffect (num); //num番目のエフェクトを表示
         GameSoundEffect (0); //Perfectサウンド（引数0）を再生
+        EffectManager.Instance.PlayEffect (num); //num番目のエフェクトを表示
         _combo++; //コンボ数を1加算
         AddScore (1); //スコア加算(倍率はPerfectなので1)
     }
@@ -157,8 +156,8 @@ public class GameController : MonoBehaviour {
     public void GreatTimingFunc (int num) {
         // Debug.Log ("Line:" + num + " Great!"); //ログ出力
         // Debug.Log (GetMusicTime ()); //ログ出力
-        EffectManager.Instance.PlayEffect (num); //num番目のエフェクトを表示
         GameSoundEffect (1); //Greatサウンド再生
+        EffectManager.Instance.PlayEffect (num); //num番目のエフェクトを表示
         _combo++; //コンボ数を1加算
         AddScore (0.75f); //スコア加算(倍率はGreatなので0.75)
     }

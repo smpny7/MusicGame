@@ -5,13 +5,19 @@ public class TouchInput : MonoBehaviour {
 
     public GUIStyle custom;
 
-    public Rect _rect1 = new Rect (0, 0, 250, 500);
-    public Rect _rect2 = new Rect (0, 0, 250, 500);
-    public Rect _rect3 = new Rect (0, 0, 250, 500);
-    public Rect _rect4 = new Rect (0, 0, 250, 500);
-    public Rect _rect5 = new Rect (0, 0, 250, 500);
+    public Rect _rect1;
+    public Rect _rect2;
+    public Rect _rect3;
+    public Rect _rect4;
+    public Rect _rect5;
 
     void Start () {
+        _rect1 = new Rect (0, 0, 250, 500);
+        _rect2 = new Rect (0, 0, 250, 500);
+        _rect3 = new Rect (0, 0, 250, 500);
+        _rect4 = new Rect (0, 0, 250, 500);
+        _rect5 = new Rect (0, 0, 250, 500);
+
         Vector3 tmp1 = GameObject.Find ("Lane1").transform.localPosition;
         _rect1.x = Screen.width / 2 + tmp1.x - 85;
         _rect1.y = Screen.height / 2 + 100;

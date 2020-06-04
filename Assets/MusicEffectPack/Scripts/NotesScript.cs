@@ -5,11 +5,15 @@ public class NotesScript : MonoBehaviour {
 
 	public int lineNum; //Unity内Scriptから取得
 	private GameController _gameManager;
+
+	private static TouchInput _touchInput;
+
 	private bool isInLine = false; //Line上にノーツがあるか
 	private KeyCode _lineKey;
 
 	void Start () {
 		_gameManager = GameObject.Find ("GameManager").GetComponent<GameController> (); //インスタンスに GameController.cs 情報を格納
+		_touchInput = GameObject.Find ("TouchInput").GetComponent<TouchInput> ();
 		_lineKey = GameUtil.GetKeyCodeByLineNum (lineNum); //ノーツに割り当てられているキーを取得
 	}
 
@@ -46,7 +50,7 @@ public class NotesScript : MonoBehaviour {
 	}
 
 	void CheckInput (KeyCode key) {
-		if (Input.GetKeyDown (key) || TouchCheck.CheckTouch (lineNum)) { //キーの入力が確認できたら
+		if (Input.GetKeyDown (key) || TouchCheck.CheckTouch (lineNum, _touchInput)) { //キーの入力が確認できたら
 			_gameManager.PerfectTimingFunc (lineNum); //エフェクト＆スコア加算
 			Destroy (this.gameObject); //オブジェクト削除
 		}
