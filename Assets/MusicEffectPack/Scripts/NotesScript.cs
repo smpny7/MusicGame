@@ -6,9 +6,7 @@ public class NotesScript : MonoBehaviour
 
     public int lineNum; //Unity内Scriptから取得
     private GameController _gameManager;
-    private bool isInPerfectLine = false; //Perfect判定内にノーツがあるか
-    private bool isInGreatLine = false; //Great判定内にノーツがあるか
-    private bool isInBadLine = false; //Bad判定内にノーツがあるか
+	private int isInLineLevel = 0; //Perfect, Great, Bad判定の区別をする（0: 判定外, 1: Bad, 2: Great, 3: Perfect）
     private KeyCode _lineKey;
 
     void Start()
@@ -28,7 +26,7 @@ public class NotesScript : MonoBehaviour
             _gameManager._combo = 0; //コンボ数を初期化 by natsu-dev
         }
 
-        if (isInBadLine)
+        if (isInLineLevel >= 1)
         { //Bad判定内にノーツあれば
             CheckInput(_lineKey); //キーを押されるかのチェック
         }
@@ -48,18 +46,18 @@ public class NotesScript : MonoBehaviour
     { //BoxColliderコンポーネントの isTrigger アクション (Unity標準関数)
         if (other.gameObject.tag == "BadJudge")
         {
-            isInBadLine = true; //Bad判定内にノーツ有り
-            Debug.Log("Bad OK.");
+            isInLineLevel++; //Bad判定内にノーツ有り
+            //Debug.Log("Bad OK.");
         }
         if (other.gameObject.tag == "GreatJudge")
         {
-            isInGreatLine = true; //Great判定内にノーツ有り
-            Debug.Log("Great OK.");
+            isInLineLevel++; //Great判定内にノーツ有り
+            //Debug.Log("Great OK.");
         }
         if (other.gameObject.tag == "PerfectJudge")
         {
-            isInPerfectLine = true; //Perfect判定内にノーツ有り
-            Debug.Log("Perfect OK.");
+            isInLineLevel++; //Perfect判定内にノーツ有り
+            //Debug.Log("Perfect OK.");
         }
 
     }
@@ -68,18 +66,18 @@ public class NotesScript : MonoBehaviour
     { //BoxColliderコンポーネントの isTrigger アクション (Unity標準関数)
         if (other.gameObject.tag == "BadJudge")
         {
-            isInBadLine = false; //Bad判定内にノーツ無し
-            Debug.Log("Bad no.");
+            isInLineLevel--; //Bad判定内にノーツ無し
+            //Debug.Log("Bad no.");
         }
         if (other.gameObject.tag == "GreatJudge")
         {
-            isInGreatLine = false; //Great判定内にノーツ無し
-            Debug.Log("Great No.");
+            isInLineLevel--; //Great判定内にノーツ無し
+            //Debug.Log("Great No.");
         }
         if (other.gameObject.tag == "PerfectJudge")
         {
-            isInPerfectLine = false; //Perfect判定内にノーツ無し
-            Debug.Log("Perfect No.");
+            isInLineLevel--; //Perfect判定内にノーツ無し
+            //Debug.Log("Perfect No.");
         }
     }
 
@@ -87,8 +85,20 @@ public class NotesScript : MonoBehaviour
     {
         if (Input.GetKeyDown(key) || TouchCheck.CheckTouch(lineNum))
         { //キーの入力が確認できたら
-            _gameManager.PerfectTimingFunc(lineNum); //エフェクト＆スコア加算
-            Destroy(this.gameObject); //オブジェクト削除
+            switch(isInLineLevel) {
+				case 1:
+					_gameManager.GameSoundEffect(2);
+           			Destroy(this.gameObject); //オブジェクト削除
+					break;
+				case 2:
+					_gameManager.GreatTimingFunc(lineNum); //エフェクト＆スコア加算
+           			Destroy(this.gameObject); //オブジェクト削除
+					break;
+				case 3:
+					_gameManager.PerfectTimingFunc(lineNum); //エフェクト＆スコア加算
+           			Destroy(this.gameObject); //オブジェクト削除
+					break;
+			}
         }
     }
 
