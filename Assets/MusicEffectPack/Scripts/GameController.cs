@@ -121,7 +121,7 @@ public class GameController : MonoBehaviour {
         } else //コンボ数が30未満のときには以下の通り単に基礎点を加算
             ScoreTemp = _basescore * magni;
 
-        for (int i = 0; i <= 15; i++) //100分割したものを5ミリ秒ごとに100回加算()
+        for (int i = 0; i < 15; i++) //100分割したものを5ミリ秒ごとに100回加算()
         {
             _score += ScoreTemp / 15;
             await Task.Delay(33);
