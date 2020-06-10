@@ -11,8 +11,6 @@ public class GameController : MonoBehaviour {
     private float[] _timing; //譜面のイベント時間 (配列, グローバル変数)
     private int[] _lineNum; //譜面のイベントレーン (配列, グローバル変数)
 
-    public TouchInput _touchInput;
-
     public string filePass; //CSVのパス
     private int _notesCount = 0; //ノーツの通し番号
 
@@ -35,7 +33,6 @@ public class GameController : MonoBehaviour {
     void Start () {
         _GameSoundEffects = GameObject.Find ("GameSoundEffect").GetComponents<AudioSource> (); //インスタンスにAudioClip情報を格納
         _audioSource = GameObject.Find ("GameMusic").GetComponent<AudioSource> (); //インスタンスにAudioClip情報を格納
-        _touchInput = GameObject.Find ("TouchInput").GetComponent<TouchInput> ();
         _timing = new float[1024]; //要素数指定してグローバル変数を初期化
         _lineNum = new int[1024]; //要素数指定してグローバル変数を初期化
         LoadCSV (); //CSV読み込みを行い譜面データを _timing, _lineNum 配列に格納
