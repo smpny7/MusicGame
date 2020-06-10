@@ -1,10 +1,9 @@
 using System.Collections;
 using UnityEngine;
 
-public class TouchInput : MonoBehaviour {
+public class TouchInput : MonoBehaviour { //By smpny7
 
     public GUIStyle custom;
-
     public Rect _rect1;
     public Rect _rect2;
     public Rect _rect3;
