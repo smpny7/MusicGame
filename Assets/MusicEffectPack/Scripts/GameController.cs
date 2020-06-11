@@ -106,19 +106,16 @@ public class GameController : MonoBehaviour {
         }
     }
 
-    public void GameSoundEffect (int sw) { //by chishige
-        if (sw == 0) { //Perfectサウンドの再生
-            _GameSoundEffects[0].PlayOneShot (_GameSoundEffects[0].clip); //PlayOneShotは効果音で使う（引数にClip情報が必要）
-        } else if (sw == 1) { //Greatサウンドの再生
-            _GameSoundEffects[1].PlayOneShot (_GameSoundEffects[1].clip);
-        } else if (sw == 2) { //Badサウンドの再生
-            _GameSoundEffects[2].PlayOneShot (_GameSoundEffects[2].clip);
-        }
+    public void GameSoundEffect (int num) { //by chishige
+        _GameSoundEffects[num].PlayOneShot (_GameSoundEffects[num].clip); //PlayOneShotは効果音で使う（引数にClip情報が必要）
+        // Debug.Log ("GameSoundEffect Played.");
     }
 
     public void PerfectTimingFunc (int num) {
-        GameSoundEffect (0); //Perfectサウンド（引数0）を再生
+        // Debug.Log ("Line:" + num + " Perfect!"); //ログ出力
+        // Debug.Log (GetMusicTime ()); //ログ出力
         EffectManager.Instance.PlayEffect (num); //num番目のエフェクトを表示
+        GameSoundEffect (0); //Perfectサウンド（引数0）を再生
         _combo++; //コンボ数を1加算
         AddScore (1); //スコア加算(倍率はPerfectなので1)
     }
