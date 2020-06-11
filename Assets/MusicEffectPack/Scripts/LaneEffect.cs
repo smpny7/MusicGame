@@ -6,10 +6,9 @@ using UnityEngine.UI;
 
 public class LaneEffect : MonoBehaviour { //By smpny7
 
-    private KeyCode _lineKey;
-
     public int _lineNum;
 
+    private KeyCode _lineKey;
     private Image m_Image; //コンポーネントを格納
     public Sprite[] m_Sprite; //オブジェクト格納
 

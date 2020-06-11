@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class EffectManager : SingletonMonoBehaviour<EffectManager> { //Self Containmen
+public class EffectManager : SingletonMonoBehaviour<EffectManager> {
 
 	public ParticleSystem[] particles;
 
