@@ -56,7 +56,7 @@ public class GameController : MonoBehaviour {
 
     void SpawnNotes (int num) {
         Instantiate (notes[num], //Instantiate(ORIGINAL, POSITION, ROTATION) :Unityライブラリ関数 -> 引数(コピー元のオブジェクト名, 生成する位置, 向き)
-            new Vector3 (-5f + (2.5f * num), 8.2f, 0), //Vector3(x, y, z) :Unityライブラリ関数
+            new Vector3 (-5f + (2.5f * num), 8.5f, 0), //Vector3(x, y, z) :Unityライブラリ関数
             Quaternion.identity); // 回転なし (親の軸と同じ)
     }
 
@@ -125,10 +125,5 @@ public class GameController : MonoBehaviour {
         EffectManager.Instance.PlayEffect (num); //num番目のエフェクトを表示
         _combo++; //コンボ数を1加算
         AddScore (0.75f); //スコア加算(倍率はGreatなので0.75)
-    }
-
-    private IEnumerator DelayMethod (float waitTime, Action action) {
-        yield return new WaitForSeconds (waitTime);
-        action ();
     }
 }
