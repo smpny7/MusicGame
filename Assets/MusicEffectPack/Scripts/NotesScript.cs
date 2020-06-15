@@ -8,11 +8,17 @@ public class NotesScript : MonoBehaviour {
     private GameController _gameManager;
     private KeyCode _lineKey;
     private static TouchInput _touchInput;
+    private LaneEffect[] _laneEffect = new LaneEffect[5];
 
     void Start () {
         _gameManager = GameObject.Find ("GameManager").GetComponent<GameController> (); //インスタンスに GameController.cs 情報を格納
         _touchInput = GameObject.Find ("TouchInput").GetComponent<TouchInput> ();
         _lineKey = GameUtil.GetKeyCodeByLineNum (lineNum); //ノーツに割り当てられているキーを取得
+        _laneEffect[0] = GameObject.Find ("Lane1").GetComponent<LaneEffect> ();
+        _laneEffect[1] = GameObject.Find ("Lane2").GetComponent<LaneEffect> ();
+        _laneEffect[2] = GameObject.Find ("Lane3").GetComponent<LaneEffect> ();
+        _laneEffect[3] = GameObject.Find ("Lane4").GetComponent<LaneEffect> ();
+        _laneEffect[4] = GameObject.Find ("Lane5").GetComponent<LaneEffect> ();
     }
 
     void Update () {
@@ -73,6 +79,7 @@ public class NotesScript : MonoBehaviour {
                     Destroy (this.gameObject); //オブジェクト削除
                     break;
             }
+            _laneEffect[lineNum].PlayLaneEffect ();
         }
     }
 }
