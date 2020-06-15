@@ -43,11 +43,11 @@ public class TouchInput : MonoBehaviour { //By smpny7
         _rect5.width = 312;
     }
 
-    void OnGUI () {
-        GUI.Box (_rect1, "", custom);
-        GUI.Box (_rect2, "", custom);
-        GUI.Box (_rect3, "", custom);
-        GUI.Box (_rect4, "", custom);
-        GUI.Box (_rect5, "", custom);
-    }
+    // void OnGUI () {
+        // GUI.Box (_rect1, "", custom);
+        // GUI.Box (_rect2, "", custom);
+        // GUI.Box (_rect3, "", custom);
+        // GUI.Box (_rect4, "", custom);
+        // GUI.Box (_rect5, "", custom);
+    // }
 }
